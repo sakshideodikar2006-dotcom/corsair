@@ -2,6 +2,7 @@ import * as ContactsModule from './contacts';
 import * as ListsModule from './lists';
 import * as MessagesModule from './messages';
 import * as ReportsModule from './reports';
+import * as SignupModule from './signup';
 import * as WebformsModule from './webforms';
 
 export const Lists = {
@@ -31,6 +32,10 @@ export const Webforms = {
 	getWebforms: WebformsModule.getWebforms,
 	getWebform: WebformsModule.getWebform,
 	deleteWebform: WebformsModule.deleteWebform,
+};
+
+export const Signup = {
+	signup: SignupModule.signup,
 };
 
 export * from './types';

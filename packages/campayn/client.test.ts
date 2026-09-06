@@ -93,6 +93,31 @@ describe('makeCampaynRequest', () => {
 		);
 	});
 
+	it('honors baseUrl override for signup', async () => {
+		mockRequest.mockResolvedValue({ success: 1, msg: 'ok' });
+
+		await makeCampaynRequest('signup', 'test-key', {
+			method: 'POST',
+			baseUrl: 'https://campayn.com',
+			body: {
+				email: 'a@b.com',
+				first_name: 'A',
+				last_name: 'B',
+				password: 'x',
+			},
+		});
+
+		expect(mockRequest).toHaveBeenCalledWith(
+			expect.objectContaining({
+				BASE: 'https://campayn.com',
+			}),
+			expect.objectContaining({
+				method: 'POST',
+				url: 'signup',
+			}),
+		);
+	});
+
 	it('maps ApiError to CampaynAPIError with code and status', async () => {
 		mockRequest.mockRejectedValue(
 			new ApiError(

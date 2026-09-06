@@ -1,6 +1,13 @@
 import { logEventFromContext } from 'corsair/core';
 import { makeCampaynRequest } from './client';
-import { Contacts, Lists, Messages, Reports, Webforms } from './endpoints';
+import {
+	Contacts,
+	Lists,
+	Messages,
+	Reports,
+	Signup,
+	Webforms,
+} from './endpoints';
 import type { CampaynContext } from './index';
 
 jest.mock('./client', () => ({
@@ -261,6 +268,41 @@ describe('messages/reports/webforms endpoints', () => {
 			'lists/1/forms/4.json',
 			'campayn-key',
 			{ method: 'DELETE' },
+		);
+	});
+});
+
+describe('signup endpoint', () => {
+	it('posts signup to site root, not /api/v1', async () => {
+		mockRequest.mockResolvedValue({
+			success: 1,
+			msg: 'Account created',
+		});
+		const result = await Signup.signup(ctx, {
+			email: 'user@example.com',
+			first_name: 'Ada',
+			last_name: 'Lovelace',
+			password: 'secret',
+			subdomain: 'ada',
+		});
+		expect(mockRequest).toHaveBeenCalledWith('signup', 'campayn-key', {
+			method: 'POST',
+			baseUrl: 'https://campayn.com',
+			body: {
+				email: 'user@example.com',
+				first_name: 'Ada',
+				last_name: 'Lovelace',
+				password: 'secret',
+				subdomain: 'ada',
+				site: undefined,
+			},
+		});
+		expect(result.success).toBe(1);
+		expect(mockLogEvent).toHaveBeenCalledWith(
+			ctx,
+			'campayn.signup.signup',
+			{},
+			'completed',
 		);
 	});
 });

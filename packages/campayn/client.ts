@@ -15,6 +15,7 @@ export class CampaynAPIError extends Error {
 
 export const CAMPAYN_API_BASE = 'https://campayn.com/api/v1';
 
+// Request bodies/queries mix optional fields; unknown is the omit filter input.
 function omitUndefined<T extends Record<string, unknown>>(
 	value?: T,
 ): T | undefined {
