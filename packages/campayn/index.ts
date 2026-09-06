@@ -14,14 +14,7 @@ import type {
 	RequiredPluginWebhookSchemas,
 } from 'corsair/core';
 import { AuthMissingError } from 'corsair/core';
-import {
-	Contacts,
-	Lists,
-	Messages,
-	Reports,
-	Signup,
-	Webforms,
-} from './endpoints';
+import { Contacts, Lists, Messages, Reports, Webforms } from './endpoints';
 import type {
 	CampaynEndpointInputs,
 	CampaynEndpointOutputs,
@@ -73,7 +66,6 @@ export type CampaynEndpoints = {
 	getWebforms: CampaynEndpoint<'getWebforms'>;
 	getWebform: CampaynEndpoint<'getWebform'>;
 	deleteWebform: CampaynEndpoint<'deleteWebform'>;
-	signup: CampaynEndpoint<'signup'>;
 };
 
 const campaynEndpointsNested = {
@@ -100,9 +92,6 @@ const campaynEndpointsNested = {
 		getWebforms: Webforms.getWebforms,
 		getWebform: Webforms.getWebform,
 		deleteWebform: Webforms.deleteWebform,
-	},
-	signup: {
-		signup: Signup.signup,
 	},
 } as const;
 
@@ -164,10 +153,6 @@ export const campaynEndpointSchemas = {
 	'webforms.deleteWebform': {
 		input: CampaynEndpointInputSchemas.deleteWebform,
 		output: CampaynEndpointOutputSchemas.deleteWebform,
-	},
-	'signup.signup': {
-		input: CampaynEndpointInputSchemas.signup,
-		output: CampaynEndpointOutputSchemas.signup,
 	},
 } as const satisfies RequiredPluginEndpointSchemas<
 	typeof campaynEndpointsNested
@@ -243,11 +228,6 @@ const campaynEndpointMeta = {
 		riskLevel: 'destructive',
 		irreversible: true,
 		description: 'Delete a webform by list ID and webform ID.',
-	},
-	'signup.signup': {
-		riskLevel: 'write',
-		description:
-			'Sign up a new Campayn user account. This endpoint requires API-key authorization for signup action.',
 	},
 } as const satisfies RequiredPluginEndpointMeta<typeof campaynEndpointsNested>;
 
@@ -340,8 +320,6 @@ export type {
 	GetWebformResponse,
 	GetWebformsInput,
 	GetWebformsResponse,
-	SignupInput,
-	SignupResponseOutput,
 	UnsubscribeContactInput,
 	UnsubscribeContactResponse,
 	UpdateListInput,

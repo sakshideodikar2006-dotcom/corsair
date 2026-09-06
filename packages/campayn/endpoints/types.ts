@@ -147,14 +147,6 @@ const UnsubscribeResponseSchema = z
 		'Campayn returns either { success: 1 } for id-based unsubscribe or an expanded object for email-based unsubscribe.',
 	);
 
-const SignupResponseSchema = z
-	.object({
-		success: z.number().or(z.boolean()),
-		msg: z.string(),
-		errorCode: z.string().optional(),
-	})
-	.loose();
-
 export const GetListsInputSchema = z.object({});
 export type GetListsInput = z.input<typeof GetListsInputSchema>;
 export const GetListsResponseSchema = z.array(ListSchema);
@@ -292,18 +284,6 @@ export type DeleteWebformInput = z.input<typeof DeleteWebformInputSchema>;
 export const DeleteWebformResponseSchema = SuccessBooleanSchema;
 export type DeleteWebformResponse = z.infer<typeof DeleteWebformResponseSchema>;
 
-export const SignupInputSchema = z.object({
-	email: z.string().email(),
-	first_name: z.string(),
-	last_name: z.string(),
-	password: z.string(),
-	subdomain: z.string().optional(),
-	site: z.string().optional(),
-});
-export type SignupInput = z.input<typeof SignupInputSchema>;
-export const SignupResponseOutputSchema = SignupResponseSchema;
-export type SignupResponseOutput = z.infer<typeof SignupResponseOutputSchema>;
-
 export const CampaynEndpointInputSchemas = {
 	getLists: GetListsInputSchema,
 	updateList: UpdateListInputSchema,
@@ -319,7 +299,6 @@ export const CampaynEndpointInputSchemas = {
 	getWebforms: GetWebformsInputSchema,
 	getWebform: GetWebformInputSchema,
 	deleteWebform: DeleteWebformInputSchema,
-	signup: SignupInputSchema,
 };
 
 export const CampaynEndpointOutputSchemas = {
@@ -337,7 +316,6 @@ export const CampaynEndpointOutputSchemas = {
 	getWebforms: GetWebformsResponseSchema,
 	getWebform: GetWebformResponseSchema,
 	deleteWebform: DeleteWebformResponseSchema,
-	signup: SignupResponseOutputSchema,
 };
 
 export type CampaynEndpointInputs = {

@@ -12,7 +12,7 @@ import {
 
 export const getLists: CampaynEndpoints['getLists'] = async (ctx, rawInput) => {
 	const input = GetListsInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>('lists.json', ctx.key, {
+	const raw = await makeCampaynRequest('lists.json', ctx.key, {
 		method: 'GET',
 	});
 	const response = GetListsResponseSchema.parse(raw);
@@ -26,17 +26,13 @@ export const updateList: CampaynEndpoints['updateList'] = async (
 	rawInput,
 ) => {
 	const input = UpdateListInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
-		`lists/${input.listId}.json`,
-		ctx.key,
-		{
-			method: 'PUT',
-			body: {
-				list_name: input.list_name,
-				tags: input.tags,
-			},
+	const raw = await makeCampaynRequest(`lists/${input.listId}.json`, ctx.key, {
+		method: 'PUT',
+		body: {
+			list_name: input.list_name,
+			tags: input.tags,
 		},
-	);
+	});
 	const response = UpdateListResponseSchema.parse(raw);
 
 	await logEventFromContext(
@@ -53,13 +49,9 @@ export const deleteList: CampaynEndpoints['deleteList'] = async (
 	rawInput,
 ) => {
 	const input = DeleteListInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
-		`lists/${input.listId}.json`,
-		ctx.key,
-		{
-			method: 'DELETE',
-		},
-	);
+	const raw = await makeCampaynRequest(`lists/${input.listId}.json`, ctx.key, {
+		method: 'DELETE',
+	});
 	const response = DeleteListResponseSchema.parse(raw);
 
 	await logEventFromContext(

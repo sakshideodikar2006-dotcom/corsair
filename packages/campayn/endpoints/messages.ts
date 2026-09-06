@@ -13,7 +13,7 @@ export const getMessages: CampaynEndpoints['getMessages'] = async (
 	rawInput,
 ) => {
 	const input = GetMessagesInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>('emails.json', ctx.key, {
+	const raw = await makeCampaynRequest('emails.json', ctx.key, {
 		method: 'GET',
 	});
 	const response = GetMessagesResponseSchema.parse(raw);
@@ -30,7 +30,7 @@ export const getMessages: CampaynEndpoints['getMessages'] = async (
 export const getMessageStatistics: CampaynEndpoints['getMessageStatistics'] =
 	async (ctx, rawInput) => {
 		const input = GetMessageStatisticsInputSchema.parse(rawInput);
-		const raw = await makeCampaynRequest<unknown>(
+		const raw = await makeCampaynRequest(
 			`emails/${input.messageId}.json`,
 			ctx.key,
 			{

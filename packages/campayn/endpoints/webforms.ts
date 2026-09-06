@@ -15,7 +15,7 @@ export const getWebforms: CampaynEndpoints['getWebforms'] = async (
 	rawInput,
 ) => {
 	const input = GetWebformsInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
+	const raw = await makeCampaynRequest(
 		`lists/${input.listId}/forms.json`,
 		ctx.key,
 		{
@@ -41,7 +41,7 @@ export const getWebform: CampaynEndpoints['getWebform'] = async (
 	rawInput,
 ) => {
 	const input = GetWebformInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
+	const raw = await makeCampaynRequest(
 		`lists/${input.listId}/forms/${input.webformId}.json`,
 		ctx.key,
 		{
@@ -64,7 +64,7 @@ export const deleteWebform: CampaynEndpoints['deleteWebform'] = async (
 	rawInput,
 ) => {
 	const input = DeleteWebformInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
+	const raw = await makeCampaynRequest(
 		`lists/${input.listId}/forms/${input.webformId}.json`,
 		ctx.key,
 		{

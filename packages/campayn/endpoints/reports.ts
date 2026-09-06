@@ -8,17 +8,13 @@ export const getReports: CampaynEndpoints['getReports'] = async (
 	rawInput,
 ) => {
 	const input = GetReportsInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
-		'reports/calendar.json',
-		ctx.key,
-		{
-			method: 'GET',
-			query: {
-				from: input.from,
-				to: input.to,
-			},
+	const raw = await makeCampaynRequest('reports/calendar.json', ctx.key, {
+		method: 'GET',
+		query: {
+			from: input.from,
+			to: input.to,
 		},
-	);
+	});
 	const response = GetReportsResponseSchema.parse(raw);
 
 	await logEventFromContext(

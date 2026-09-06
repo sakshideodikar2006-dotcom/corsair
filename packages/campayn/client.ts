@@ -15,6 +15,17 @@ export class CampaynAPIError extends Error {
 
 export const CAMPAYN_API_BASE = 'https://campayn.com/api/v1';
 
+function omitUndefined<T extends Record<string, unknown>>(
+	value?: T,
+): T | undefined {
+	if (!value) return undefined;
+	const next = Object.fromEntries(
+		Object.entries(value).filter(([, item]) => item !== undefined),
+	) as T;
+	return Object.keys(next).length > 0 ? next : undefined;
+}
+
+// Campayn error JSON varies by status; unknown forces runtime narrowing.
 function extractErrorMessage(body: unknown): string | undefined {
 	if (typeof body !== 'object' || body === null) return undefined;
 
@@ -47,6 +58,7 @@ function extractErrorMessage(body: unknown): string | undefined {
 	return undefined;
 }
 
+// Campayn error JSON varies by status; unknown forces runtime narrowing.
 function extractErrorCode(body: unknown): string | number | undefined {
 	if (typeof body !== 'object' || body === null) return undefined;
 
@@ -70,6 +82,7 @@ export async function makeCampaynRequest<T>(
 	apiKey: string,
 	options: {
 		method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+		// Request JSON fields differ per endpoint; unknown values are omitted.
 		body?: Record<string, unknown>;
 		query?: Record<string, string | number | boolean | undefined>;
 		baseUrl?: string;
@@ -94,10 +107,10 @@ export async function makeCampaynRequest<T>(
 		url: endpoint,
 		body:
 			method === 'POST' || method === 'PUT' || method === 'PATCH'
-				? body
+				? omitUndefined(body)
 				: undefined,
 		mediaType: 'application/json; charset=utf-8',
-		query: method === 'GET' ? query : undefined,
+		query: method === 'GET' ? omitUndefined(query) : undefined,
 	};
 
 	try {

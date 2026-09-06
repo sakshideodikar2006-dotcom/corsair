@@ -552,50 +552,6 @@ await corsair.campayn.api.reports.getReports({
 
 ---
 
-## Signup
-
-### signup
-
-`signup.signup`
-
-Sign up a new Campayn user account. This endpoint requires API-key authorization for signup action.
-
-**Risk:** `write`
-
-```ts
-await corsair.campayn.api.signup.signup({
-  email: 'new.user@example.com',
-  first_name: 'New',
-  last_name: 'User',
-  password: 'secure-password-123'
-});
-```
-
-**Input**
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| `email` | `string` | Yes | — |
-| `first_name` | `string` | Yes | — |
-| `last_name` | `string` | Yes | — |
-| `password` | `string` | Yes | — |
-| `subdomain` | `string` | No | — |
-| `site` | `string` | No | — |
-
-
-
-**Output**
-
-| Name | Type | Required | Description |
-|------|------|----------|-------------|
-| `success` | `number \| boolean` | Yes | — |
-| `msg` | `string` | Yes | — |
-| `errorCode` | `string` | No | — |
-
-
-
----
-
 ## Webforms
 
 ### deleteWebform

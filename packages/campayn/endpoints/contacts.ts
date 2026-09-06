@@ -19,7 +19,7 @@ export const getContacts: CampaynEndpoints['getContacts'] = async (
 	rawInput,
 ) => {
 	const input = GetContactsInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
+	const raw = await makeCampaynRequest(
 		`lists/${input.listId}/contacts.json`,
 		ctx.key,
 		{
@@ -45,7 +45,7 @@ export const getContact: CampaynEndpoints['getContact'] = async (
 	rawInput,
 ) => {
 	const input = GetContactInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
+	const raw = await makeCampaynRequest(
 		`contacts/${input.contactId}.json`,
 		ctx.key,
 		{
@@ -68,7 +68,7 @@ export const createContact: CampaynEndpoints['createContact'] = async (
 	rawInput,
 ) => {
 	const input = CreateContactInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
+	const raw = await makeCampaynRequest(
 		`lists/${input.listId}/contacts.json`,
 		ctx.key,
 		{
@@ -108,7 +108,7 @@ export const deleteContact: CampaynEndpoints['deleteContact'] = async (
 	rawInput,
 ) => {
 	const input = DeleteContactInputSchema.parse(rawInput);
-	const raw = await makeCampaynRequest<unknown>(
+	const raw = await makeCampaynRequest(
 		`contacts/${input.contactId}.json`,
 		ctx.key,
 		{
@@ -129,7 +129,7 @@ export const deleteContact: CampaynEndpoints['deleteContact'] = async (
 export const unsubscribeContact: CampaynEndpoints['unsubscribeContact'] =
 	async (ctx, rawInput) => {
 		const input = UnsubscribeContactInputSchema.parse(rawInput);
-		const raw = await makeCampaynRequest<unknown>(
+		const raw = await makeCampaynRequest(
 			`lists/${input.listId}/unsubscribe.json`,
 			ctx.key,
 			{

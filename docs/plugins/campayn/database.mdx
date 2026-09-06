@@ -31,7 +31,12 @@ const rows = await corsair.campayn.db.contacts.search({
 | `first_name` | `string` | equals, contains, startsWith, endsWith, in |
 | `last_name` | `string` | equals, contains, startsWith, endsWith, in |
 | `company` | `string` | equals, contains, startsWith, endsWith, in |
-| `status` | `string` | equals, contains, startsWith, endsWith, in |
+| `title` | `string` | equals, contains, startsWith, endsWith, in |
+| `address` | `string` | equals, contains, startsWith, endsWith, in |
+| `country` | `string` | equals, contains, startsWith, endsWith, in |
+| `city` | `string` | equals, contains, startsWith, endsWith, in |
+| `state` | `string` | equals, contains, startsWith, endsWith, in |
+| `zip` | `string` | equals, contains, startsWith, endsWith, in |
 
 _Every `.search()` also accepts `limit` and `offset` for pagination. `.list()` is available on the same path without the `.search` suffix in code — see [database operations](/concepts/database)._
 
@@ -57,6 +62,7 @@ const rows = await corsair.campayn.db.lists.search({
 | `id` | `string` | equals, contains, startsWith, endsWith, in |
 | `list_name` | `string` | equals, contains, startsWith, endsWith, in |
 | `tags` | `string` | equals, contains, startsWith, endsWith, in |
+| `contact_count` | `string` | equals, contains, startsWith, endsWith, in |
 
 _Every `.search()` also accepts `limit` and `offset` for pagination. `.list()` is available on the same path without the `.search` suffix in code — see [database operations](/concepts/database)._
 
@@ -135,6 +141,7 @@ const rows = await corsair.campayn.db.webforms.search({
 | `contact_list_id` | `string` | equals, contains, startsWith, endsWith, in |
 | `form_title` | `string` | equals, contains, startsWith, endsWith, in |
 | `form_type` | `string` | equals, contains, startsWith, endsWith, in |
+| `form_html` | `string` | equals, contains, startsWith, endsWith, in |
 
 _Every `.search()` also accepts `limit` and `offset` for pagination. `.list()` is available on the same path without the `.search` suffix in code — see [database operations](/concepts/database)._
 

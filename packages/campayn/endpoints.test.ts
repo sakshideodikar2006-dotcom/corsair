@@ -1,13 +1,6 @@
 import { logEventFromContext } from 'corsair/core';
 import { makeCampaynRequest } from './client';
-import {
-	Contacts,
-	Lists,
-	Messages,
-	Reports,
-	Signup,
-	Webforms,
-} from './endpoints';
+import { Contacts, Lists, Messages, Reports, Webforms } from './endpoints';
 import type { CampaynContext } from './index';
 
 jest.mock('./client', () => ({
@@ -28,7 +21,8 @@ const mockLogEvent = logEventFromContext as jest.MockedFunction<
 	typeof logEventFromContext
 >;
 
-const ctx = { key: 'campayn-key', options: {} } as unknown as CampaynContext;
+// Handlers only read ctx.key; runtime builds the full plugin context.
+const ctx = { key: 'campayn-key', options: {} } as CampaynContext;
 
 beforeEach(() => {
 	mockRequest.mockReset();
@@ -184,7 +178,7 @@ describe('contacts endpoints', () => {
 	});
 });
 
-describe('messages/reports/webforms/signup endpoints', () => {
+describe('messages/reports/webforms endpoints', () => {
 	it('getMessages calls GET /emails.json', async () => {
 		mockRequest.mockResolvedValue([{ id: '500', status: 'delivered' }]);
 		const result = await Messages.getMessages(ctx, {});
@@ -268,37 +262,6 @@ describe('messages/reports/webforms/signup endpoints', () => {
 			'campayn-key',
 			{ method: 'DELETE' },
 		);
-	});
-
-	it('signup calls POST /signup via relative path', async () => {
-		mockRequest.mockResolvedValue({ success: 1, msg: 'New user created' });
-
-		const result = await Signup.signup(ctx, {
-			email: 'new@example.com',
-			first_name: 'New',
-			last_name: 'User',
-			password: 'secret123',
-		});
-
-		expect(mockRequest).toHaveBeenCalledWith('signup', 'campayn-key', {
-			method: 'POST',
-			baseUrl: 'https://campayn.com',
-			body: {
-				email: 'new@example.com',
-				first_name: 'New',
-				last_name: 'User',
-				password: 'secret123',
-				subdomain: undefined,
-				site: undefined,
-			},
-		});
-		expect(mockLogEvent).toHaveBeenCalledWith(
-			ctx,
-			'campayn.signup.signup',
-			{},
-			'completed',
-		);
-		expect(result.success).toBe(1);
 	});
 });
 

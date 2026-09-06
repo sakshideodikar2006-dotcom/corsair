@@ -61,27 +61,34 @@ describe('makeCampaynRequest', () => {
 		);
 	});
 
-	it('supports overriding base URL for non-versioned endpoints', async () => {
-		mockRequest.mockResolvedValue({ success: 1, msg: 'New user created' });
+	it('omits undefined body and query fields', async () => {
+		mockRequest.mockResolvedValue({ success: true });
 
-		await makeCampaynRequest('signup', 'test-key', {
-			method: 'POST',
-			baseUrl: 'https://campayn.com',
-			body: {
-				email: 'new@example.com',
-				first_name: 'New',
-				last_name: 'User',
-				password: 'secret123',
-			},
+		await makeCampaynRequest('lists/7.json', 'test-key', {
+			method: 'PUT',
+			body: { list_name: 'VIP', tags: undefined },
 		});
 
 		expect(mockRequest).toHaveBeenCalledWith(
+			expect.anything(),
 			expect.objectContaining({
-				BASE: 'https://campayn.com',
+				method: 'PUT',
+				body: { list_name: 'VIP' },
 			}),
+		);
+
+		mockRequest.mockClear();
+		mockRequest.mockResolvedValue([]);
+		await makeCampaynRequest('lists/10/contacts.json', 'test-key', {
+			method: 'GET',
+			query: { 'filter[contact]': undefined },
+		});
+
+		expect(mockRequest).toHaveBeenCalledWith(
+			expect.anything(),
 			expect.objectContaining({
-				method: 'POST',
-				url: 'signup',
+				method: 'GET',
+				query: undefined,
 			}),
 		);
 	});
